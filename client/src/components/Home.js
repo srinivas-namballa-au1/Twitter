@@ -1,13 +1,23 @@
-import React from 'react';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
-class Home extends React.Component {
-    render() {
-        return(
-            <div>
-                This is Home page
-            </div>
-        );
-    }
+import Login from './Authentication/Login.js';
+import Signup from './Authentication/Signup.js';
+
+class Home extends Component {
+	
+	render () {
+		const { isAuthenticated } = this.props
+		return (
+			<div>
+				{ isAuthenticated ? <Signup /> : <Login/ > }
+			</div>
+		)
+	}
 }
 
-export default Home;
+const mapStateToProps = (state) => ({
+	isAuthenticated: !!state.auth.isAuthenticated
+})
+
+export default connect(mapStateToProps)(Home)
